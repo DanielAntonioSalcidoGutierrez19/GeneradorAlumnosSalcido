@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Alumnos</title>
+</head>
+<body>
+<h1>Generador de Alumnos</h1>
+<div>
+    <label for="numero-alumnos">Número de Alumnos:</label>
+    <input type="number" id="numero-alumnos" min="1" value="10">
+    <button onclick="generarAlumnos()">Generar</button>
+</div>
+<div id="datos-alumnos">
+    <!-- Aquí se mostrarán los datos de los alumnos en una tabla -->
+</div>
+<div>
+    <button onclick="generarSQL()">Descargar SQL</button>
+    <button onclick="generarCSV()">Descargar CSV</button>
+    <button onclick="generarJSON()">Descargar JSON</button>
+</div>
+<script>
+var alumnos = [];
+function generarAlumnos() {
+    var numeroAlumnos = document.getElementById("numero-alumnos").value;
+    var nombres = ["Juan", "Maria", "Carlos", "Ana", "Pedro", "Laura", "Miguel", "Sofia", "Diego", "Paula", "Alejandro", "Valentina", "Jose", "Camila", "Daniel", "Emma", "Javier", "Lucia", "Andres", "Isabella", "Fernando", "Julia", "Roberto", "Diana", "Francisco", "Valeria", "Raul", "Natalia", "Luis", "Carolina", "Gabriel", "Elena", "Pablo", "Sara", "Mario", "Victoria", "Esteban", "Catalina", "Alberto", "Veronica", "Hector", "Adrian", "Rosa", "Federico", "Rocio", "Ignacio", "Marina", "Julio", "Alicia", "Manuel", "Rafael", "Gema", "Angel", "Cristina", "David", "Beatriz", "Antonio", "Ruben", "Nuria", "Jorge", "Irene", "Luisa", "Marcelo", "Olga", "Francisca", "Diego", "Carmen", "Andrea", "Martin", "Pilar", "Alvaro", "Juana", "Joaquin", "Angeles", "Marta", "Montserrat", "Emilio", "Patricia", "Rocio", "Isabel", "Eduardo", "Cristina"];
+    var apellidos1 = ["Garcia", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Perez", "Sanchez", "Ramirez", "Torres", "Fernandez", "Diaz", "Ruiz", "Alvarez", "Jimenez", "Moreno", "Munoz", "Alonso", "Romero", "Navarro", "Gutierrez", "Vazquez", "Serrano", "Ramos", "Blanco", "Molina", "Ortega", "Delgado", "Castro", "Ortiz", "Rubio", "Marin", "Sanz", "Iglesias", "Nunez", "Medina", "Garrido", "Cortes", "Fuentes", "Cruz", "Leon", "Herrera", "Diez", "Vega", "Campos", "Vidal", "Carmona", "Lozano", "Santos", "Pascual", "Arias", "Gimenez", "Ferrer", "Duran", "Suarez", "Rivas", "Mendez", "Lorenzo", "Salgado", "Hidalgo", "Aguilar", "Santiago", "Benitez", "Vargas", "Mora", "Arias", "Reyes", "Bernal", "Pastor", "Carrasco", "Olivares", "Cabrera", "Soler", "Montes", "Herrero", "Crespo", "Pardo", "Esteban", "Bravo", "Jimeno", "Mesa", "Miranda", "Pacheco", "Solis", "Luna", "Duran", "Quintero", "Mendoza"];
+    var apellidos2 = ["Fernandez", "Diaz", "Ruiz", "Alvarez", "Jimenez", "Moreno", "Munoz", "Alonso", "Romero", "Navarro", "Garcia", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Perez", "Sanchez", "Ramirez", "Torres", "Gutierrez", "Vazquez", "Serrano", "Ramos", "Blanco", "Molina", "Ortega", "Delgado", "Castro", "Ortiz", "Rubio", "Marin", "Sanz", "Iglesias", "Nunez", "Medina", "Garrido", "Cortes", "Fuentes", "Cruz", "Leon", "Herrera", "Diez", "Vega", "Campos", "Vidal", "Carmona", "Lozano", "Santos", "Pascual", "Arias", "Gimenez", "Ferrer", "Duran", "Suarez", "Rivas", "Mendez", "Lorenzo", "Salgado", "Hidalgo", "Aguilar", "Santiago", "Benitez", "Vargas", "Mora", "Arias", "Reyes", "Bernal", "Pastor", "Carrasco", "Olivares", "Cabrera", "Soler", "Montes", "Herrero", "Crespo", "Pardo", "Esteban", "Bravo", "Jimeno", "Mesa", "Miranda", "Pacheco", "Solis", "Luna", "Duran", "Quintero", "Mendoza"];
+    alumnos = [];
+    for (var i = 0; i < numeroAlumnos; i++) {
+        var idAlumno = i + 1;
+        var nombre = nombres[Math.floor(Math.random() * nombres.length)];
+        var apellido1 = apellidos1[Math.floor(Math.random() * apellidos1.length)];
+        var apellido2 = apellidos2[Math.floor(Math.random() * apellidos2.length)];
+
+        alumnos.push({ "id": idAlumno, "nombre": nombre, "apellido1": apellido1, "apellido2": apellido2 });
+    }
+    var tabla = "<table border='1'><tr><th>ID</th><th>Nombre</th><th>Apellido 1</th><th>Apellido 2</th></tr>";
+    for (var i = 0; i < alumnos.length; i++) {
+        tabla += "<tr><td>" + alumnos[i].id + "</td><td>" + alumnos[i].nombre + "</td><td>" + alumnos[i].apellido1 + "</td><td>" + alumnos[i].apellido2 + "</td></tr>";
+    }
+    tabla += "</table>";
+    document.getElementById("datos-alumnos").innerHTML = tabla;
+}
+function generarSQL() {
+    var contenidoSQL = "CREATE TABLE Alumnos (id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255), apellido1 VARCHAR(255), apellido2 VARCHAR(255));\n";
+    for (var i = 0; i < alumnos.length; i++) {
+        var alumno = alumnos[i];
+        contenidoSQL += "INSERT INTO Alumnos (id, nombre, apellido1, apellido2) VALUES (" + alumno.id + ", '" + alumno.nombre + "', '" + alumno.apellido1 + "', '" + alumno.apellido2 + "');\n";
+    }
+    descargarArchivo(contenidoSQL, "alumnos.sql");
+}
+function generarCSV() {
+    var contenidoCSV = "id,nombre,apellido1,apellido2\n";
+    for (var i = 0; i < alumnos.length; i++) {
+        var alumno = alumnos[i];
+        contenidoCSV += alumno.id + "," + alumno.nombre + "," + alumno.apellido1 + "," + alumno.apellido2 + "\n";
+    }
+    descargarArchivo(contenidoCSV, "alumnos.csv");
+}
+
+function generarJSON() {
+    var contenidoJSON = JSON.stringify(alumnos, null, 4);
+    descargarArchivo(contenidoJSON, "alumnos.json");
+}
+function descargarArchivo(contenido, nombreArchivo) {
+    var elemento = document.createElement('a');
+    elemento.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contenido));
+    elemento.setAttribute('download', nombreArchivo);
+    elemento.style.display = 'none';
+    document.body.appendChild(elemento);
+    elemento.click();
+    document.body.removeChild(elemento);
+}
+</script>
+</body>
+</html>
